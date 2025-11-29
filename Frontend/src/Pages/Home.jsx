@@ -16,28 +16,13 @@ export default function Home() {
       .get(API_BASE, { timeout: 10000 })
       .then((res) => {
         if (!mounted) return;
-        console.log("Recipes response:", res.data); // debug the API response
         setRecipes(Array.isArray(res.data) ? res.data : []);
       })
       .catch((err) => {
-        console.error("There was an error fetching the recipes!", err);
-        console.error("Status:", err?.response?.status);
-        console.error("Response data:", err?.response?.data);
-
-        if (
-          err?.code === "ERR_NETWORK" ||
-          err?.message?.toLowerCase().includes("network error")
-        ) {
-          setError(
-            "Network Error: Cannot reach backend. Make sure the backend is running and VITE_API_URL is correct."
-          );
-        } else {
-          setError(
-            err?.response?.data?.message ||
-              err.message ||
-              "Failed to fetch recipes"
-          );
-        }
+        console.error("Error fetching recipes:", err);
+        setError(
+          err?.response?.data?.message || err.message || "Failed to fetch recipes"
+        );
       })
       .finally(() => mounted && setLoading(false));
 
@@ -50,43 +35,53 @@ export default function Home() {
   if (error) return <div className="p-4 text-red-600">Error: {error}</div>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">All Recipes</h2>
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-6 text-center">All Recipes</h2>
 
       {Array.isArray(recipes) && recipes.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {recipes.map((recipe) => (
             <div
               key={recipe._id || recipe.id}
-              className="border rounded p-4 shadow"
+              className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full hover:shadow-xl transition-shadow duration-300"
             >
-              {recipe.image && (
+              {recipe.image ? (
                 <img
                   src={recipe.image}
                   alt={recipe.title}
-                  className="w-full h-40 object-cover mb-2 rounded"
+                  className="w-full h-48 object-cover"
                 />
+              ) : (
+                <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+                  No Image
+                </div>
               )}
-              <h3 className="text-xl font-semibold mb-2">{recipe.title}</h3>
-              <p className="mb-2">{recipe.description}</p>
-              <div className="text-sm text-gray-600">
-                Rating: {recipe.rating ?? "N/A"}
+
+              <div className="p-4 flex-1 flex flex-col">
+                <h3 className="text-xl font-semibold mb-2">{recipe.title}</h3>
+                <p className="text-gray-700 flex-1 mb-4">
+                  {recipe.description || "No description available."}
+                </p>
+
+                <div className="text-sm text-gray-600 mb-1">
+                  <strong>Rating:</strong> {recipe.rating ?? "N/A"}
+                </div>
+                {recipe.timeToPrepare && (
+                  <div className="text-sm text-gray-600 mb-1">
+                    <strong>Time:</strong> {recipe.timeToPrepare}
+                  </div>
+                )}
+                {recipe.user && (
+                  <div className="text-xs text-gray-500 mt-auto">
+                    By: {recipe.user.name} ({recipe.user.email})
+                  </div>
+                )}
               </div>
-              {recipe.timeToPrepare && (
-                <div className="text-sm text-gray-600">
-                  Time: {recipe.timeToPrepare}
-                </div>
-              )}
-              {recipe.user && (
-                <div className="text-xs text-gray-500 mt-1">
-                  By: {recipe.user.name} ({recipe.user.email})
-                </div>
-              )}
             </div>
           ))}
         </div>
       ) : (
-        <div>No recipes found</div>
+        <div className="text-center text-gray-500 mt-10">No recipes found</div>
       )}
     </div>
   );
