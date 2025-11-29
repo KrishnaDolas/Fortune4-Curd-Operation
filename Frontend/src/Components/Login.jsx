@@ -29,7 +29,7 @@ export default function Login({ onAuthChange }) {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/login`,
         { email: email.trim(), password: password.trim() },
-        { timeout: 10000 }
+        { timeout: 30000 }
       );
 
       if (res?.data?.token) {
