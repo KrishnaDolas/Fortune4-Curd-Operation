@@ -9,42 +9,33 @@ export default function Home() {
   const rawEnv = import.meta.env.VITE_API_URL;
   // const API_BASE = rawEnv.replace(/\/$/, "") + "/api/recipe";
 
-  useEffect(() => {
-    let mounted = true;
-    setLoading(true);
+ useEffect(() => {
+  let mounted = true;
+  setLoading(true);
 
-    axios
-      .get(`${import.meta.env.VITE_API_URL}`, { timeout: 10000 })
-      .then((res) => {
-        if (!mounted) return;
-        setRecipes(res.data || []);
-      })
-      .catch((err) => {
-        console.error("There was an error fetching the recipes!", err);
-        console.error("Status:", err?.response?.status);
-        console.error("Response data:", err?.response?.data);
+  const API_BASE = `${import.meta.env.VITE_API_URL.replace(/\/$/, "")}/api/recipe`;
 
-        if (
-          err?.code === "ERR_NETWORK" ||
-          err?.message?.toLowerCase().includes("network error")
-        ) {
-          setError(
-            "Network Error: Cannot reach backend. Make sure the backend is running and VITE_API_URL is correct."
-          );
-        } else {
-          setError(
-            err?.response?.data?.message ||
-              err.message ||
-              "Failed to fetch recipes"
-          );
-        }
-      })
-      .finally(() => mounted && setLoading(false));
+  axios
+    .get(API_BASE, { timeout: 10000 })
+    .then((res) => {
+      if (!mounted) return;
+      setRecipes(Array.isArray(res.data) ? res.data : []);
+    })
+    .catch((err) => {
+      console.error("There was an error fetching the recipes!", err);
+      setError(
+        err?.response?.data?.message ||
+          err.message ||
+          "Failed to fetch recipes"
+      );
+    })
+    .finally(() => mounted && setLoading(false));
 
-    return () => {
-      mounted = false;
-    };
-  }, [import.meta.env.VITE_API_URL]);
+  return () => {
+    mounted = false;
+  };
+}, [import.meta.env.VITE_API_URL]);
+
 
   if (loading) return <div className="p-4">Loading recipes...</div>;
   if (error) return <div className="p-4 text-red-600">Error: {error}</div>;
