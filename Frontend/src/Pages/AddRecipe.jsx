@@ -12,7 +12,7 @@ export default function AddRecipe() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const rawEnv = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const rawEnv = import.meta.env.VITE_API_URL;
   const API_BASE = rawEnv.replace(/\/$/, "") + "/api/recipe";
 
   const validate = () => {
