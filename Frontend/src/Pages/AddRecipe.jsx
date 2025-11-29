@@ -171,7 +171,7 @@ export default function AddRecipe() {
             </div>
 
             {/* Auth status pill */}
-            <div className="mt-1 sm:mt-0">
+            {/* <div className="mt-1 sm:mt-0">
               {storedToken ? (
                 <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-medium text-emerald-700 border border-emerald-100">
                   <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -183,7 +183,7 @@ export default function AddRecipe() {
                   Not logged in – please login
                 </span>
               )}
-            </div>
+            </div> */}
           </div>
 
           {/* Form grid */}
