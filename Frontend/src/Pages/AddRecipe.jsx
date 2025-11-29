@@ -154,7 +154,7 @@ export default function AddRecipe() {
 
       {/* Small info bar about auth status */}
       <div className="mb-4 text-sm">
-        <span className="font-semibold">Auth status:</span>{" "}
+        {/* <span className="font-semibold">Auth status:</span>{" "} */}
         {storedToken ? (
           <span className="text-green-600">Token found in localStorage</span>
         ) : (

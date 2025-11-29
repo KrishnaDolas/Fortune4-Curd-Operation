@@ -117,10 +117,10 @@ export default function Login({ onAuthChange }) {
           </button>
         </div>
 
-        <div className="mt-2 text-xs text-gray-600 break-all">
+        {/* <div className="mt-2 text-xs text-gray-600 break-all">
           <strong>Current token:</strong>{" "}
           {currentToken || "No token stored in localStorage"}
-        </div>
+        </div> */}
 
         <div className="mt-4 text-sm text-center">
           Don&apos;t have an account?{" "}
