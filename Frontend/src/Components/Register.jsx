@@ -14,9 +14,6 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  const rawEnv = import.meta.env.VITE_API_URL;
-  // const API_BASE = rawEnv.replace(/\/$/, "") + "/api/auth";
-
   const handleRegister = async () => {
     setError("");
     setSuccessMsg("");
@@ -46,8 +43,6 @@ export default function Register() {
 
       setSuccessMsg(res?.data?.message || "User registered successfully");
 
-      // Optional: auto-redirect to login after a short while
-      // or just ask the user to click login button
       setName("");
       setEmail("");
       setPassword("");
@@ -69,73 +64,142 @@ export default function Register() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 border rounded mt-4">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-rose-50 to-emerald-50 flex items-center justify-center px-4 py-8">
+      <div className="relative max-w-md w-full">
+        {/* Glow background blob */}
+        <div className="pointer-events-none absolute -inset-4 bg-gradient-to-tr from-emerald-200/70 via-rose-300/50 to-amber-200/60 blur-3xl opacity-60" />
 
-      <div className="space-y-3">
-        <div>
-          <input
-            type="text"
-            placeholder="Name"
-            className="w-full p-2 border border-gray-300 rounded"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+        {/* Glass card */}
+        <div className="relative rounded-3xl bg-white/80 backdrop-blur-2xl shadow-2xl border border-white/70 px-6 py-8 sm:px-8 sm:py-9">
+          {/* Logo / title */}
+          <div className="mb-6 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-emerald-400 to-amber-400 text-2xl shadow-lg">
+              ✨
+            </div>
+            <p className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-emerald-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              Join the community
+            </p>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+              Create your account
+            </h2>
+            <p className="mt-1 text-xs sm:text-sm text-slate-600">
+              Save your favourite recipes and share your own.
+            </p>
+          </div>
 
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full p-2 border border-gray-300 rounded"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+          {/* Form */}
+          <div className="space-y-4">
+            {/* Name */}
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-700">
+                Name
+              </label>
+              <div className="relative">
+                <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400 text-sm">
+                  👤
+                </span>
+                <input
+                  type="text"
+                  placeholder="Your full name"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 pl-9 pr-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-300 shadow-inner"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+            </div>
 
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full p-2 border border-gray-300 rounded"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+            {/* Email */}
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-700">
+                Email
+              </label>
+              <div className="relative">
+                <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400 text-sm">
+                  ✉️
+                </span>
+                <input
+                  type="email"
+                  placeholder="you@example.com"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 pl-9 pr-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-300 shadow-inner"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
 
-        <div>
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="w-full p-2 border border-gray-300 rounded"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
+            {/* Password */}
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-700">
+                Password
+              </label>
+              <div className="relative">
+                <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400 text-sm">
+                  🔒
+                </span>
+                <input
+                  type="password"
+                  placeholder="Create a password"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 pl-9 pr-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-300 shadow-inner"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
 
-        {error && <div className="text-red-600 text-sm">{error}</div>}
-        {successMsg && (
-          <div className="text-green-600 text-sm">{successMsg}</div>
-        )}
+            {/* Confirm Password */}
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-700">
+                Confirm password
+              </label>
+              <div className="relative">
+                <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400 text-sm">
+                  ✅
+                </span>
+                <input
+                  type="password"
+                  placeholder="Repeat your password"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 pl-9 pr-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-300 shadow-inner"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
 
-        <button
-          type="button"
-          disabled={loading}
-          onClick={handleRegister}
-          className="w-full px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-60"
-        >
-          {loading ? "Registering..." : "Register"}
-        </button>
+            {/* Messages */}
+            {error && (
+              <div className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-2xl px-3 py-2">
+                {error}
+              </div>
+            )}
+            {successMsg && (
+              <div className="text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-2xl px-3 py-2">
+                {successMsg}
+              </div>
+            )}
 
-        <div className="mt-4 text-sm text-center">
-          Already have an account?{" "}
-          <button
-            type="button"
-            onClick={goToLogin}
-            className="text-blue-600 underline"
-          >
-            Login
-          </button>
+            {/* Button */}
+            <button
+              type="button"
+              disabled={loading}
+              onClick={handleRegister}
+              className="w-full inline-flex items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 via-rose-400 to-amber-400 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-200/60 hover:brightness-105 disabled:opacity-60 disabled:cursor-not-allowed transition-all mt-1"
+            >
+              {loading ? "Registering..." : "Create account"}
+            </button>
+
+            {/* Footer */}
+            <div className="pt-3 text-xs text-center text-slate-600">
+              Already have an account?{" "}
+              <button
+                type="button"
+                onClick={goToLogin}
+                className="font-semibold text-emerald-700 hover:text-emerald-800 underline underline-offset-2"
+              >
+                Login
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
