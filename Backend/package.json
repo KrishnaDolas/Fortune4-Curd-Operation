@@ -2,10 +2,9 @@
   "name": "fortune4-backend",
   "version": "1.0.0",
   "main": "Server.js",
-  "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node Server.js",
+    "dev": "nodemon Server.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
