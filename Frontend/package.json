@@ -1,5 +1,5 @@
 {
-  "homepage": "https://<username>.github.io/Fortune4-Curd-Operation",
+  "homepage": "https://KrishnaDolas.github.io/Fortune4-Curd-Operation",
   "name": "npm",
   "private": true,
   "version": "0.0.0",
@@ -9,8 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-      "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
