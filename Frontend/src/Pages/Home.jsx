@@ -4,7 +4,7 @@ import axios from "axios";
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); // removed : string | null
 
   useEffect(() => {
     let mounted = true;
@@ -24,7 +24,10 @@ export default function Home() {
       .catch((err) => {
         console.error("Error fetching recipes:", err);
         setError(
-          err?.response?.data?.message ||
+          (err &&
+            err.response &&
+            err.response.data &&
+            err.response.data.message) ||
             err.message ||
             "Failed to fetch recipes"
         );
@@ -168,11 +171,11 @@ export default function Home() {
                   {recipe.user && (
                     <div className="mt-4 flex items-center gap-2 border-t border-slate-100 pt-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-amber-400 to-rose-400 text-xs font-bold text-white">
-                        {recipe.user.name
-                          ?.split(" ")
+                        {(recipe.user.name || "U")
+                          .split(" ")
                           .map((n) => n[0])
                           .join("")
-                          .slice(0, 2) || "U"}
+                          .slice(0, 2)}
                       </div>
                       <div className="min-w-0">
                         <p className="truncate text-xs font-medium text-slate-800">
