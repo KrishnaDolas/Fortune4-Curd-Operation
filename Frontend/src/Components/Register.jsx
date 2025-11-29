@@ -15,7 +15,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const rawEnv = import.meta.env.VITE_API_URL;
-  const API_BASE = rawEnv.replace(/\/$/, "") + "/api/auth";
+  // const API_BASE = rawEnv.replace(/\/$/, "") + "/api/auth";
 
   const handleRegister = async () => {
     setError("");
@@ -35,7 +35,7 @@ export default function Register() {
 
     try {
       const res = await axios.post(
-        `${API_BASE}/register`,
+        `${import.meta.env.VITE_API_URL}/register`,
         {
           name: name.trim(),
           email: email.trim(),

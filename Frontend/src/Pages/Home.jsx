@@ -7,14 +7,14 @@ export default function Home() {
   const [error, setError] = useState(null);
 
   const rawEnv = import.meta.env.VITE_API_URL;
-  const API_BASE = rawEnv.replace(/\/$/, "") + "/api/recipe";
+  // const API_BASE = rawEnv.replace(/\/$/, "") + "/api/recipe";
 
   useEffect(() => {
     let mounted = true;
     setLoading(true);
 
     axios
-      .get(`${API_BASE}`, { timeout: 10000 })
+      .get(`${import.meta.env.VITE_API_URL}`, { timeout: 10000 })
       .then((res) => {
         if (!mounted) return;
         setRecipes(res.data || []);
@@ -44,7 +44,7 @@ export default function Home() {
     return () => {
       mounted = false;
     };
-  }, [API_BASE]);
+  }, [import.meta.env.VITE_API_URL]);
 
   if (loading) return <div className="p-4">Loading recipes...</div>;
   if (error) return <div className="p-4 text-red-600">Error: {error}</div>;

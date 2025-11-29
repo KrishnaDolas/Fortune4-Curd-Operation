@@ -13,7 +13,7 @@ export default function AddRecipe() {
   const [errors, setErrors] = useState({});
 
   const rawEnv = import.meta.env.VITE_API_URL;
-  const API_BASE = rawEnv.replace(/\/$/, "") + "/api/recipe";
+  // const API_BASE = rawEnv.replace(/\/$/, "") + "/api/recipe";
 
   const validate = () => {
     const e = {};
@@ -93,10 +93,10 @@ export default function AddRecipe() {
         Authorization: token,
       };
 
-      console.log("Sending POST to:", `${API_BASE}/add`);
+      console.log("Sending POST to:", `${import.meta.env.VITE_API_URL}/add`);
       console.log("Authorization header:", headers.Authorization);
 
-      const res = await axios.post(`${API_BASE}/add`, payload, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/add`, payload, {
         headers,
         timeout: 15000,
       });

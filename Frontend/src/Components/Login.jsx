@@ -13,7 +13,7 @@ export default function Login({ onAuthChange }) {
   const navigate = useNavigate();
 
   const rawEnv = import.meta.env.VITE_API_URL;
-  const API_BASE = rawEnv.replace(/\/$/, "") + "/api/auth";
+  // const API_BASE = rawEnv.replace(/\/$/, "") + "/api/auth";
 
   const handleLogin = async () => {
     setError("");
@@ -27,7 +27,7 @@ export default function Login({ onAuthChange }) {
     setLoading(true);
     try {
       const res = await axios.post(
-        `${API_BASE}/login`,
+        `${import.meta.env.VITE_API_URL}/login`,
         { email: email.trim(), password: password.trim() },
         { timeout: 10000 }
       );
