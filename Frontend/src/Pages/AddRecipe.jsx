@@ -89,7 +89,7 @@ export default function AddRecipe() {
         Authorization: token,
       };
 
-      console.log("Sending POST to:", `${import.meta.env.VITE_API_URL}/add`);
+      console.log("Sending POST to:", `${import.meta.env.VITE_API_URL}/api/recipe/add`);
       console.log("Authorization header:", headers.Authorization);
 
       const res = await axios.post(
