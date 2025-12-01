@@ -321,187 +321,186 @@ export default function Home() {
         )}
       </div>
 
-      {/* ---------- Beautiful Recipe Modal ---------- */}
-      {isModalOpen && selectedRecipe && (
-        <div
-          className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm px-4"
-          onClick={closeRecipeModal}
-        >
-          <div
-            className="relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-3xl bg-white/95 shadow-2xl border border-white/70 animate-[fadeIn_0.25s_ease-out]"
-            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
-          >
-            {/* Close button */}
-            <button
-              onClick={closeRecipeModal}
-              className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-slate-600 hover:bg-black/10 hover:text-slate-900 transition-colors"
-              aria-label="Close"
-            >
-              ✕
-            </button>
+     {/* Modal wrapper */}
+{isModalOpen && selectedRecipe && (
+  <div
+    className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm px-4"
+    onClick={closeRecipeModal}
+  >
+    <div
+      className="relative max-h-[90vh] w-full max-w-3xl rounded-3xl bg-white/95 shadow-2xl border border-white/70 animate-[fadeIn_0.25s_ease-out] flex flex-col"
+      onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+    >
+      {/* Close button */}
+      <button
+        onClick={closeRecipeModal}
+        className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-slate-600 hover:bg-black/10 hover:text-slate-900 transition-colors"
+        aria-label="Close"
+      >
+        ✕
+      </button>
 
-            {/* Image */}
-            {selectedRecipe.image && (
-              <div className="relative h-56 w-full overflow-hidden">
-                <img
-                  src={selectedRecipe.image}
-                  alt={selectedRecipe.title}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-                <div className="absolute bottom-4 left-5 right-16 flex flex-wrap items-end justify-between gap-3">
-                  <div>
-                    <p className="inline-flex items-center rounded-full bg-amber-500/90 px-3 py-1 text-[11px] font-semibold text-white shadow">
-                      Featured Recipe
-                    </p>
-                    <h2 className="mt-2 text-xl sm:text-2xl font-bold text-white drop-shadow">
-                      {selectedRecipe.title}
-                    </h2>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedRecipe.timeToPrepare && (
-                      <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-slate-800 shadow">
-                        ⏱ {selectedRecipe.timeToPrepare}
-                      </span>
-                    )}
-                    {selectedRecipe.rating != null && (
-                      <span className="inline-flex items-center rounded-full bg-amber-400/95 px-3 py-1 text-[11px] font-semibold text-slate-900 shadow">
-                        ⭐ {selectedRecipe.rating}/5
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Content */}
-            <div className="grid gap-6 p-5 sm:p-6 lg:p-7 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1.2fr)] overflow-y-auto max-h-[calc(90vh-1rem)]">
-              {/* Left: Description + Directions */}
-              <div>
-                {!selectedRecipe.image && (
-                  <h2 className="text-xl font-bold text-slate-900 mb-2">
-                    {selectedRecipe.title}
-                  </h2>
-                )}
-
-                <p className="text-sm text-slate-600 mb-4">
-                  {selectedRecipe.description ||
-                    selectedRecipe.discription ||
-                    "No description provided."}
-                </p>
-
-                {/* Tags */}
-                <div className="mb-5 flex flex-wrap gap-2 text-[11px]">
-                  {selectedRecipe.cuisine && (
-                    <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700">
-                      🌍 {selectedRecipe.cuisine}
-                    </span>
-                  )}
-                  {selectedRecipe.category && (
-                    <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1 font-medium text-amber-700">
-                      🍽️ {selectedRecipe.category}
-                    </span>
-                  )}
-                  {selectedRecipe.servings && (
-                    <span className="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 font-medium text-sky-700">
-                      👥 Serves {selectedRecipe.servings}
-                    </span>
-                  )}
-                </div>
-
-                {/* Directions */}
-                {selectedRecipe.directions && selectedRecipe.directions.length > 0 && (
-                  <div className="mb-5">
-                    <h3 className="text-sm font-semibold text-slate-900 mb-2">
-                      Step-by-step directions
-                    </h3>
-                    <ol className="space-y-2 text-sm text-slate-700">
-                      {selectedRecipe.directions.map((step, idx) => (
-                        <li
-                          key={idx}
-                          className="flex gap-3 rounded-2xl bg-slate-50 px-3 py-2"
-                        >
-                          <span className="mt-0.5 h-6 w-6 flex items-center justify-center rounded-full bg-emerald-100 text-[11px] font-semibold text-emerald-700">
-                            {idx + 1}
-                          </span>
-                          <p className="leading-snug">{step}</p>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                )}
-
-                {/* User info */}
-                {selectedRecipe.user && (
-                  <div className="mt-2 flex items-center gap-3 border-t border-slate-100 pt-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-amber-400 to-rose-400 text-xs font-bold text-white shadow">
-                      {(selectedRecipe.user.name || "U")
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .slice(0, 2)}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-slate-800">
-                        {selectedRecipe.user.name}
-                      </p>
-                      <p className="truncate text-[11px] text-slate-500">
-                        {selectedRecipe.user.email}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Right: Ingredients Card */}
-              <div className="space-y-4">
-                <div className="rounded-2xl bg-slate-900 text-slate-50 p-4 shadow-xl relative overflow-hidden">
-                  <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-amber-400/20 blur-2xl" />
-                  <h3 className="relative text-sm font-semibold mb-2 flex items-center gap-2">
-                    <span className="text-lg">📝</span> Ingredients
-                  </h3>
-                  {selectedRecipe.ingredients &&
-                  selectedRecipe.ingredients.length > 0 ? (
-                    <ul className="relative space-y-1.5 text-[13px]">
-                      {selectedRecipe.ingredients.map((ing, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-2 border-b border-white/5 pb-1.5 last:border-0 last:pb-0"
-                        >
-                          <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-amber-400" />
-                          <span>{ing}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="relative text-[13px] text-slate-200">
-                      Ingredients not provided.
-                    </p>
-                  )}
-                </div>
-
-                {/* Small info card */}
-                <div className="rounded-2xl bg-white border border-slate-100 p-4 text-xs text-slate-600 shadow-sm">
-                  <p className="font-semibold text-slate-800 mb-1">
-                    Pro tip 💡
-                  </p>
-                  <p>
-                    Save this recipe to try later or tweak the ingredients to
-                    match your taste. Great recipes are born from experiments!
-                  </p>
-                </div>
-
-                <button
-                  onClick={closeRecipeModal}
-                  className="w-full rounded-full bg-slate-900 text-slate-50 py-2.5 text-sm font-semibold shadow-md hover:bg-slate-800 transition-colors"
-                >
-                  Close
-                </button>
-              </div>
+      {/* Image */}
+      {selectedRecipe.image && (
+        <div className="relative h-56 w-full overflow-hidden flex-shrink-0">
+          <img
+            src={selectedRecipe.image}
+            alt={selectedRecipe.title}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+          <div className="absolute bottom-4 left-5 right-16 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="inline-flex items-center rounded-full bg-amber-500/90 px-3 py-1 text-[11px] font-semibold text-white shadow">
+                Featured Recipe
+              </p>
+              <h2 className="mt-2 text-xl sm:text-2xl font-bold text-white drop-shadow">
+                {selectedRecipe.title}
+              </h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {selectedRecipe.timeToPrepare && (
+                <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-slate-800 shadow">
+                  ⏱ {selectedRecipe.timeToPrepare}
+                </span>
+              )}
+              {selectedRecipe.rating != null && (
+                <span className="inline-flex items-center rounded-full bg-amber-400/95 px-3 py-1 text-[11px] font-semibold text-slate-900 shadow">
+                  ⭐ {selectedRecipe.rating}/5
+                </span>
+              )}
             </div>
           </div>
         </div>
       )}
+
+      {/* Scrollable content area */}
+      <div className="grid gap-6 p-5 sm:p-6 lg:p-7 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1.2fr)] overflow-y-auto max-h-[calc(90vh-14rem)]">
+        {/* Left: Description + Directions */}
+        <div>
+          {!selectedRecipe.image && (
+            <h2 className="text-xl font-bold text-slate-900 mb-2">
+              {selectedRecipe.title}
+            </h2>
+          )}
+
+          <p className="text-sm text-slate-600 mb-4">
+            {selectedRecipe.description ||
+              selectedRecipe.discription ||
+              "No description provided."}
+          </p>
+
+          {/* Tags */}
+          <div className="mb-5 flex flex-wrap gap-2 text-[11px]">
+            {selectedRecipe.cuisine && (
+              <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700">
+                🌍 {selectedRecipe.cuisine}
+              </span>
+            )}
+            {selectedRecipe.category && (
+              <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1 font-medium text-amber-700">
+                🍽️ {selectedRecipe.category}
+              </span>
+            )}
+            {selectedRecipe.servings && (
+              <span className="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 font-medium text-sky-700">
+                👥 Serves {selectedRecipe.servings}
+              </span>
+            )}
+          </div>
+
+          {/* Directions */}
+          {selectedRecipe.directions &&
+            selectedRecipe.directions.length > 0 && (
+              <div className="mb-5">
+                <h3 className="text-sm font-semibold text-slate-900 mb-2">
+                  Step-by-step directions
+                </h3>
+                <ol className="space-y-2 text-sm text-slate-700">
+                  {selectedRecipe.directions.map((step, idx) => (
+                    <li
+                      key={idx}
+                      className="flex gap-3 rounded-2xl bg-slate-50 px-3 py-2"
+                    >
+                      <span className="mt-0.5 h-6 w-6 flex items-center justify-center rounded-full bg-emerald-100 text-[11px] font-semibold text-emerald-700">
+                        {idx + 1}
+                      </span>
+                      <p className="leading-snug">{step}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+          {/* User info */}
+          {selectedRecipe.user && (
+            <div className="mt-2 flex items-center gap-3 border-t border-slate-100 pt-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-amber-400 to-rose-400 text-xs font-bold text-white shadow">
+                {(selectedRecipe.user.name || "U")
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .slice(0, 2)}
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-slate-800">
+                  {selectedRecipe.user.name}
+                </p>
+                <p className="truncate text-[11px] text-slate-500">
+                  {selectedRecipe.user.email}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Right: Ingredients + Tip + Close */}
+        <div className="space-y-4">
+          <div className="rounded-2xl bg-slate-900 text-slate-50 p-4 shadow-xl relative overflow-hidden">
+            <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-amber-400/20 blur-2xl" />
+            <h3 className="relative text-sm font-semibold mb-2 flex items-center gap-2">
+              <span className="text-lg">📝</span> Ingredients
+            </h3>
+            {selectedRecipe.ingredients &&
+            selectedRecipe.ingredients.length > 0 ? (
+              <ul className="relative space-y-1.5 text-[13px]">
+                {selectedRecipe.ingredients.map((ing, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-start gap-2 border-b border-white/5 pb-1.5 last:border-0 last:pb-0"
+                  >
+                    <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-amber-400" />
+                    <span>{ing}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="relative text-[13px] text-slate-200">
+                Ingredients not provided.
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-2xl bg-white border border-slate-100 p-4 text-xs text-slate-600 shadow-sm">
+            <p className="font-semibold text-slate-800 mb-1">Pro tip 💡</p>
+            <p>
+              Save this recipe to try later or tweak the ingredients to match
+              your taste. Great recipes are born from experiments!
+            </p>
+          </div>
+
+          <button
+            onClick={closeRecipeModal}
+            className="w-full rounded-full bg-slate-900 text-slate-50 py-2.5 text-sm font-semibold shadow-md hover:bg-slate-800 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }
