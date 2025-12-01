@@ -327,9 +327,10 @@ export default function Home() {
     className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm px-4"
     onClick={closeRecipeModal}
   >
+    {/* This is the SCROLLABLE modal card */}
     <div
-      className="relative max-h-[90vh] w-full max-w-3xl rounded-3xl bg-white/95 shadow-2xl border border-white/70 animate-[fadeIn_0.25s_ease-out] flex flex-col"
-      onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+      className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white/95 shadow-2xl border border-white/70 animate-[fadeIn_0.25s_ease-out]"
+      onClick={(e) => e.stopPropagation()} // don't close when clicking inside
     >
       {/* Close button */}
       <button
@@ -340,9 +341,9 @@ export default function Home() {
         ✕
       </button>
 
-      {/* Image */}
+      {/* Hero image */}
       {selectedRecipe.image && (
-        <div className="relative h-56 w-full overflow-hidden flex-shrink-0">
+        <div className="relative h-56 w-full overflow-hidden rounded-t-3xl">
           <img
             src={selectedRecipe.image}
             alt={selectedRecipe.title}
@@ -374,9 +375,9 @@ export default function Home() {
         </div>
       )}
 
-      {/* Scrollable content area */}
-      <div className="grid gap-6 p-5 sm:p-6 lg:p-7 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1.2fr)] overflow-y-auto max-h-[calc(90vh-14rem)]">
-        {/* Left: Description + Directions */}
+      {/* Body content – this can be as tall as needed, card will scroll */}
+      <div className="grid gap-6 p-5 sm:p-6 lg:p-7 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1.2fr)]">
+        {/* Left: description + directions */}
         <div>
           {!selectedRecipe.image && (
             <h2 className="text-xl font-bold text-slate-900 mb-2">
@@ -390,7 +391,6 @@ export default function Home() {
               "No description provided."}
           </p>
 
-          {/* Tags */}
           <div className="mb-5 flex flex-wrap gap-2 text-[11px]">
             {selectedRecipe.cuisine && (
               <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700">
@@ -409,7 +409,6 @@ export default function Home() {
             )}
           </div>
 
-          {/* Directions */}
           {selectedRecipe.directions &&
             selectedRecipe.directions.length > 0 && (
               <div className="mb-5">
@@ -432,7 +431,6 @@ export default function Home() {
               </div>
             )}
 
-          {/* User info */}
           {selectedRecipe.user && (
             <div className="mt-2 flex items-center gap-3 border-t border-slate-100 pt-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-amber-400 to-rose-400 text-xs font-bold text-white shadow">
@@ -454,7 +452,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* Right: Ingredients + Tip + Close */}
+        {/* Right: ingredients + tip + close */}
         <div className="space-y-4">
           <div className="rounded-2xl bg-slate-900 text-slate-50 p-4 shadow-xl relative overflow-hidden">
             <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-amber-400/20 blur-2xl" />
@@ -500,6 +498,7 @@ export default function Home() {
     </div>
   </div>
 )}
+
 
     </div>
   );
